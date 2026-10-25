@@ -41,3 +41,6 @@ example
 # generated native folders
 /ios
 /android
+
+# env with real values (keep .env.example if added)
+.env

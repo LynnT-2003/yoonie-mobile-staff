@@ -8,11 +8,13 @@
     "scheme": "yooniemobilestaff",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "si.yoonie.staff",
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "si.yoonie.staff",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#28594E",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -28,12 +30,20 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#28594E",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-sqlite",
+      "expo-notifications"
     ],
+    "extra": {
+      "eas": {
+        "projectId": "b5e11413-41c1-4ca6-a5ce-f8fefd82dbf0"
+      }
+    },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
