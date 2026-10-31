@@ -21,6 +21,8 @@ const ICONS = {
   profile: { ios: "person.crop.circle", android: "account_circle" },
   profileActive: { ios: "person.crop.circle.fill", android: "account_circle" },
   chevronRight: { ios: "chevron.right", android: "chevron_right" },
+  chevronDown: { ios: "chevron.down", android: "expand_more" },
+  chevronUp: { ios: "chevron.up", android: "expand_less" },
   clock: { ios: "clock", android: "schedule" },
   plane: { ios: "airplane", android: "flight" },
   person: { ios: "person", android: "person" },
@@ -39,6 +41,14 @@ const ICONS = {
   building: { ios: "building.2", android: "apartment" },
   sparkles: { ios: "sparkles", android: "cleaning_services" },
   door: { ios: "door.left.hand.closed", android: "door_front" },
+  search: { ios: "magnifyingglass", android: "search" },
+  filter: { ios: "line.3.horizontal.decrease", android: "filter_list" },
+  grid: { ios: "square.grid.2x2.fill", android: "grid_view" },
+  list: { ios: "list.bullet", android: "view_list" },
+  sort: { ios: "arrow.up.arrow.down", android: "swap_vert" },
+  close: { ios: "xmark.circle.fill", android: "cancel" },
+  arrowUp: { ios: "arrow.up", android: "arrow_upward" },
+  arrowDown: { ios: "arrow.down", android: "arrow_downward" },
 } satisfies Record<string, { ios: SFSymbol; android: AndroidSymbol }>;
 
 export type IconName = keyof typeof ICONS;
