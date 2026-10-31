@@ -111,12 +111,12 @@ export const LoginView: React.FC<LoginViewProps> = ({ vm }) => {
               </Text>
 
               <View style={styles.presetList}>
-                {vm.presets.map((preset) => {
+                {vm.presets.map((preset, index) => {
                   const isSelected =
                     vm.email.toLowerCase() === preset.email.toLowerCase();
                   return (
                     <TouchableOpacity
-                      key={preset.email}
+                      key={`${preset.email}-${index}`}
                       style={[
                         styles.presetItem,
                         isSelected && styles.presetItemSelected,
