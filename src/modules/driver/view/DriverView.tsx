@@ -81,12 +81,12 @@ export const DriverView: React.FC<DriverViewProps> = ({ vm }) => {
 
         {/* the journey: what's been reported, with times */}
         <View style={styles.steps}>
-          {PICKUP_STAGE_ORDER.slice(1).map((st) => {
+          {PICKUP_STAGE_ORDER.slice(1).map((st, i) => {
             const idx = PICKUP_STAGE_ORDER.indexOf(st);
             const done = idx <= current;
             const at = [...(item.steps ?? [])].reverse().find((s) => s.stage === st)?.at;
             return (
-              <View key={st} style={styles.stepRow}>
+              <View key={`${st}-${i}`} style={styles.stepRow}>
                 <View style={[styles.stepDot, done ? styles.stepDotDone : null]} />
                 <Text style={[styles.stepText, done ? styles.stepTextDone : null]}>{STEP_LABEL[st]}</Text>
                 <Text style={styles.stepTime}>{done && at ? formatTime(at) : ""}</Text>
@@ -107,6 +107,7 @@ export const DriverView: React.FC<DriverViewProps> = ({ vm }) => {
             icon="person"
             label="Guest"
             value={item.guestName}
+            style={styles.infoRow}
             last={!item.meetingDoor && !item.vehiclePlate}
           />
           {item.meetingDoor ? (
@@ -114,11 +115,12 @@ export const DriverView: React.FC<DriverViewProps> = ({ vm }) => {
               icon="door"
               label="Meeting point"
               value={`Arrivals, door ${item.meetingDoor}`}
+              style={styles.infoRow}
               last={!item.vehiclePlate}
             />
           ) : null}
           {item.vehiclePlate ? (
-            <InfoRow icon="pickups" label="Vehicle" value={item.vehiclePlate} last />
+            <InfoRow icon="pickups" label="Vehicle" value={item.vehiclePlate} style={styles.infoRow} last />
           ) : null}
         </View>
 
@@ -185,7 +187,7 @@ export const DriverView: React.FC<DriverViewProps> = ({ vm }) => {
       ) : (
         <FlatList
           data={vm.tasks}
-          keyExtractor={(item) => item.dispatchId}
+          keyExtractor={(item, index) => `${item.dispatchId || item.orderId || "pickup"}-${index}`}
           renderItem={renderItem}
           contentContainerStyle={listContent}
           refreshControl={
@@ -214,12 +216,12 @@ const styles = StyleSheet.create({
   cardTitleWrap: { flex: 1 },
   flightNumber: { ...type.title3, ...type.mono, color: ui.text },
   meta: { ...type.footnote, color: ui.textSecondary, marginTop: 2 },
-  rows: { marginTop: 8, marginBottom: 14 },
+  rows: { gap: 6 },
+  infoRow: { paddingVertical: 0, borderBottomWidth: 0 },
   sign: {
     backgroundColor: ui.surfaceMuted,
     borderRadius: radii.md,
     padding: 14,
-    marginBottom: 14,
     gap: 4,
   },
   signLabel: { ...type.caption, color: ui.textSecondary },
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
   signEn: { ...type.subhead, color: ui.text },
   signTh: { ...type.subhead, color: ui.textSecondary },
   actions: { gap: 10 },
-  steps: { marginTop: 12, gap: 6 },
+  steps: { gap: 6 },
   stepRow: { flexDirection: "row", alignItems: "center", gap: 10 },
   stepDot: {
     width: 10,
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
   stepText: { ...type.footnote, color: ui.textTertiary, flex: 1 },
   stepTextDone: { color: ui.text },
   stepTime: { ...type.footnote, color: ui.textSecondary, fontVariant: ["tabular-nums"] },
-  issue: { marginBottom: 12 },
+  issue: {},
   doneText: {
     ...type.footnote,
     color: ui.success,

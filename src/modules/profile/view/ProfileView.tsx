@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   identityText: { flex: 1, minWidth: 0 },
   name: { ...type.title3, color: ui.text },
   role: { ...type.footnote, color: ui.textSecondary, marginTop: 2 },
-  groupCard: { paddingVertical: 0, marginBottom: 8 },
+  groupCard: { paddingVertical: 0, gap: 0, marginBottom: 8 },
   row: {
     flexDirection: "row",
     alignItems: "center",

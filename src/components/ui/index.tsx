@@ -104,15 +104,17 @@ export function InfoRow({
   icon,
   valueStyle,
   last,
+  style,
 }: {
   label: string;
   value: React.ReactNode;
   icon?: IconName;
   valueStyle?: StyleProp<TextStyle>;
   last?: boolean;
+  style?: StyleProp<ViewStyle>;
 }) {
   return (
-    <View style={[styles.infoRow, !last && styles.infoRowDivider]}>
+    <View style={[styles.infoRow, !last && styles.infoRowDivider, style]}>
       <View style={styles.infoLabelWrap}>
         {icon ? <Icon name={icon} size={15} color={ui.textTertiary} /> : null}
         <Text style={styles.infoLabel}>{label}</Text>
@@ -347,6 +349,7 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: ui.separator,
     padding: 16,
+    gap: 12,
     overflow: "hidden",
   },
   cardPressed: { backgroundColor: "#FBFAF8" },

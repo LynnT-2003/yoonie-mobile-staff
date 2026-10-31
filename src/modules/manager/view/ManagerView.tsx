@@ -112,7 +112,7 @@ export const ManagerView: React.FC<ManagerViewProps> = ({ vm }) => {
       ) : (
         <FlatList
           data={vm.rooms}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item, index) => `${item._id || (item as any).id || "room"}-${index}`}
           renderItem={renderItem}
           contentContainerStyle={listContent}
           refreshControl={
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   cardTitleWrap: { flex: 1 },
   roomNumber: { ...type.title3, ...type.mono, color: ui.text },
   roomMeta: { ...type.footnote, color: ui.textSecondary, marginTop: 2 },
-  amenities: { ...type.footnote, color: ui.textSecondary, marginTop: 12, marginBottom: 14 },
+  amenities: { ...type.footnote, color: ui.textSecondary },
   actionRow: { flexDirection: "row", gap: 8 },
   actionBtn: { flex: 1 },
   modalOverlay: {

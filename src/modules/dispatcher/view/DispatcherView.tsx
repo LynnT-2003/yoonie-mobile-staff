@@ -101,13 +101,11 @@ export const DispatcherView: React.FC<DispatcherViewProps> = ({ vm }) => {
         </View>
 
         {isCritical || isWarn ? (
-          <View style={styles.severity}>
-            <Badge
-              label={isCritical ? "Critical" : "Needs attention"}
-              tone={isCritical ? "danger" : "warning"}
-              dot
-            />
-          </View>
+          <Badge
+            label={isCritical ? "Critical" : "Needs attention"}
+            tone={isCritical ? "danger" : "warning"}
+            dot
+          />
         ) : null}
 
         {item.housekeeping || item.pickup ? (
@@ -117,6 +115,7 @@ export const DispatcherView: React.FC<DispatcherViewProps> = ({ vm }) => {
                 icon="rooms"
                 label={`Room ${item.housekeeping.roomNumber}`}
                 value={item.housekeeping.guestName || "Arrival"}
+                style={styles.infoRow}
                 last={!item.pickup}
               />
             ) : null}
@@ -125,13 +124,12 @@ export const DispatcherView: React.FC<DispatcherViewProps> = ({ vm }) => {
                 icon="plane"
                 label={item.pickup.flightNumber}
                 value={item.pickup.guestName}
+                style={styles.infoRow}
                 last
               />
             ) : null}
           </View>
-        ) : (
-          <View style={styles.spacer} />
-        )}
+        ) : null}
 
         {item.pickup && isOpenTask(item) ? (
           <Text style={styles.meta}>{pickupLine(item)}</Text>
@@ -180,7 +178,7 @@ export const DispatcherView: React.FC<DispatcherViewProps> = ({ vm }) => {
 
       <View style={styles.stats}>
         {stats.map((s, i) => (
-          <View key={s.label} style={[styles.stat, i > 0 && styles.statDivider]}>
+          <View key={`${s.label}-${i}`} style={[styles.stat, i > 0 && styles.statDivider]}>
             <Text style={[styles.statValue, { color: s.color }]}>{s.value}</Text>
             <Text style={styles.statLabel}>{s.label}</Text>
           </View>
@@ -193,11 +191,11 @@ export const DispatcherView: React.FC<DispatcherViewProps> = ({ vm }) => {
         contentContainerStyle={styles.filters}
         style={styles.filtersScroll}
       >
-        {FILTERS.map((opt) => {
+        {FILTERS.map((opt, i) => {
           const isActive = vm.filterType === opt.value;
           return (
             <Pressable
-              key={opt.value}
+              key={`${opt.value}-${i}`}
               onPress={() => vm.setFilterType(opt.value)}
               accessibilityRole="button"
               accessibilityState={{ selected: isActive }}
@@ -225,7 +223,7 @@ export const DispatcherView: React.FC<DispatcherViewProps> = ({ vm }) => {
       ) : (
         <FlatList
           data={vm.tasks}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item, index) => `${item._id || (item as any).id || "dispatch"}-${index}`}
           renderItem={renderItem}
           contentContainerStyle={listContent}
           refreshControl={
@@ -279,7 +277,6 @@ const styles = StyleSheet.create({
   cardTitleWrap: { flex: 1 },
   taskTitle: { ...type.headline, color: ui.text },
   meta: { ...type.footnote, color: ui.textSecondary, marginTop: 2 },
-  severity: { marginTop: 10 },
-  rows: { marginTop: 8, marginBottom: 14 },
-  spacer: { height: 14 },
+  rows: { gap: 6 },
+  infoRow: { paddingVertical: 0, borderBottomWidth: 0 },
 });
